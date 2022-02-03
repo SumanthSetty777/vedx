@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== "production"){
 
 const express = require("express");
 const path = require('path');
-const orderData = require('./data.json');
+// const orderData = require('./data.json');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const methodOverride = require('method-override');
