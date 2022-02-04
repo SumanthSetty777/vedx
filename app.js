@@ -7,7 +7,6 @@ if (process.env.NODE_ENV !== "production"){
 
 const express = require("express");
 const path = require('path');
-// const orderData = require('./data.json');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const methodOverride = require('method-override');
@@ -25,14 +24,14 @@ const Customer = require('./models/customer');
 const Product = require('./models/product');
 
 
-app.use(express.static('public')) //to use css files and js files
+app.use(express.static('public'))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.set("view engine", 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
 const dbUrl = process.env.DB_URL
-//'mongodb://localhost:27017/vedx
+
 mongoose.connect(dbUrl || 'mongodb://localhost:27017/vedx', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -51,7 +50,6 @@ app.get("/", (req, res) => {
 
 app.get("/customers", async (req, res) => {
   const customers = await Customer.find({});
-  // console.log(customers);
   res.render("customers.ejs", {
     customers
   });
@@ -62,7 +60,6 @@ app.get("/customerNew", async (req, res) =>{
 })
 
 app.post("/customerNew", async (req, res) =>{
-    // console.log(req.body);
     const newCustomer = new Customer(req.body);
     await newCustomer.save()
     res.redirect(`/customers/${newCustomer._id}`);
@@ -97,7 +94,6 @@ app.get("/customer/:id1/product/:id2", async (req, res) => {
     id1,
     id2
   } = req.params;
-  // console.log(id2);
   const productDetails = await Product.findById(id2);
   res.render("productShow", {
     id1,
@@ -110,7 +106,7 @@ app.get("/customer/:id1/:id2/order", async (req, res) => {
     id1,
     id2
   } = req.params;
-  // console.log(id1, id2);
+
   const customerDetails = await Customer.findById(id1);
   const productDetails = await Product.findById(id2);
 
@@ -153,9 +149,7 @@ app.post("/productNew", async (req, res) =>{
 
 app.get('/orders', async (req, res) => {
   const orders = await Order.find({});
-  //const order = await Order.deleteMany();
 
-  //res.send("kk");
   res.render("orders.ejs", {
     data: orders
   });
@@ -163,7 +157,7 @@ app.get('/orders', async (req, res) => {
 
 app.get('/order/customer', async(req, res)=>{
   const customers = await Customer.find({});
-  // console.log(customers);
+
   res.render("customers1.ejs", {
     customers
   });
@@ -171,14 +165,14 @@ app.get('/order/customer', async(req, res)=>{
 
 app.get('/orders/:id/edit', async (req, res)=>{
   const {id} = req.params;
-  // console.log(id, "llllllllll")
+
   const order = await Order.findById(id);
 
   res.render('orderEdit.ejs', {order})
 })
 
 app.post('/orderNew', async(req, res)=>{
-  // console.log(req.body);
+
   const orderNew = new Order(req.body)
   await orderNew.save();
   const orders = await Order.find({});
@@ -186,7 +180,6 @@ app.post('/orderNew', async(req, res)=>{
 })
 
 app.put('/order/:id', async (req, res)=>{
-  // console.log(req.body);
   const {id} = req.params;
   await Order.findByIdAndUpdate(id, req.body);
   const orders = await Order.find({});
