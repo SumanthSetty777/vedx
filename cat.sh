@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat pom.xml
+cat $PWD/pom.xml
