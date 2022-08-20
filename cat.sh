@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat $WORKSPACE/release/master/assignment/pom.xml
+cat $WORKSPACE/release/master/assignment1/pom.xml
