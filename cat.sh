@@ -1,5 +1,6 @@
 #!/bin/bash
 
-echo $CWD
+echo "********"
+echo "${CWD}"
 
 cat $WORKSPACE/release/master/$1/pom.xml
